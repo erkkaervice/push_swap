@@ -6,7 +6,7 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:29:55 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/08/19 15:19:15 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:02:14 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_compare(char *line, t_stack **sta, t_stack **stb)
 	else if (ft_strncmp(line, "rrr\n", 4) == 0)
 		ft_rrr(sta, stb);
 	else
-		ft_error(sta, stb);
+		ft_errorr(sta, stb);
 	return (0);
 }
 
@@ -47,7 +47,7 @@ void	ft_arnew(int ac, char **av, char ***new_av)
 
 	*new_av = (char **)malloc(sizeof(char *) * (ac + 1));
 	if (!*new_av)
-		ft_error(NULL, NULL);
+		ft_errorr(NULL, NULL);
 	i = 0;
 	while (i < ac)
 	{
@@ -63,10 +63,10 @@ void	ft_pipe(int ac, char **av, int *pipe_fd)
 	char	**new_av;
 
 	if (pipe(pipe_fd) == -1)
-		ft_error(NULL, NULL);
+		ft_errorr(NULL, NULL);
 	pid = fork();
 	if (pid == -1)
-		ft_error(NULL, NULL);
+		ft_errorr(NULL, NULL);
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
@@ -76,7 +76,7 @@ void	ft_pipe(int ac, char **av, int *pipe_fd)
 		if (execvp("./push_swap", new_av) == -1)
 		{
 			free(new_av);
-			ft_error(NULL, NULL);
+			ft_errorr(NULL, NULL);
 		}
 	}
 	else
@@ -96,7 +96,7 @@ void	ft_comparison(int fd, t_stack **sta, t_stack **stb)
 		if (ft_compare(line, sta, stb))
 		{
 			free(line);
-			ft_error(sta, stb);
+			ft_errorr(sta, stb);
 		}
 		free(line);
 		line = get_next_line(fd);
@@ -113,10 +113,10 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (0);
 	if (!ft_valid(av))
-		ft_error(NULL, NULL);
+		ft_errorr(NULL, NULL);
 	sta = ft_value(ac, av);
 	if (!sta)
-		ft_error(&sta, NULL);
+		ft_errorr(&sta, NULL);
 	stb = NULL;
 	ft_pipe(ac, av, pipe_fd);
 	fd = pipe_fd[0];

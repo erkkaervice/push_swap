@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/20 15:44:12 by eala-lah          #+#    #+#              #
-#    Updated: 2024/10/03 15:32:33 by eala-lah         ###   ########.fr        #
+#    Created: 2024/10/04 15:36:34 by eala-lah          #+#    #+#              #
+#    Updated: 2024/10/04 16:00:30 by eala-lah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ INCS        = -I ./inc/
 LIBFT_DIR   = libft/
 LIBFT       = $(LIBFT_DIR)/libft.a
 
-SRC_DIR    = src/
-SRCS        = $(addprefix $(SRC_DIR), $(SRC))
+SRC_DIR     = src/
 SRC         = \
     1-validation.c \
     2-stacking.c \
@@ -45,40 +44,50 @@ BONUS_SRC   = \
     rotate.c \
     reverse_rotate.c
 
-OBJ_DIR    = obj/
+OBJ_DIR     = obj/
 OBJS        = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 BONUS_OBJS  = $(addprefix $(OBJ_DIR), $(BONUS_SRC:.c=.o))
 
-CC      = gcc
-CFLAGS  = -Wall -Wextra -Werror
+CC          = gcc
+CFLAGS      = -Wall -Wextra -Werror -fPIC
+GIT_FLAGS   = git clone --depth 1
 
 all: $(OBJ_DIR) $(LIBFT) $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
-
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
+	@echo "Created object directory."
 
 $(LIBFT):
-	make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC"
+	@if [ ! -d "$(LIBFT_DIR)" ]; then \
+		$(GIT_FLAGS) https://github.com/erkkaervice/libft.git $(LIBFT_DIR) || exit 1; \
+	fi
+	@make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC" 2> /dev/stderr > /dev/null
+	@echo "Libft library built."
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c inc/push_swap.h
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ 2> /dev/stderr > /dev/null
+	@echo "Compiled $< into $@."
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft 2> /dev/stderr > /dev/null
+	@echo "Executable $(NAME) created."
 
-$(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME) -L $(LIBFT_DIR) -lft
+bonus: $(OBJ_DIR) $(LIBFT) $(BONUS_NAME)
 
-bonus: $(OBJ_DIR) $(BONUS_NAME)
+$(BONUS_NAME): $(BONUS_OBJS)
+	@$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME) -L $(LIBFT_DIR) -lft 2> /dev/stderr > /dev/null
+	@echo "Executable $(BONUS_NAME) created."
 
 clean:
-	rm -rf $(OBJ_DIR)
-	make -C $(LIBFT_DIR) clean
+	@rm -rf $(OBJ_DIR) 2> /dev/stderr > /dev/null
+	@make -C $(LIBFT_DIR) clean 2> /dev/stderr > /dev/null
+	@echo "Cleaned up $(OBJ_DIR) and library."
 
 fclean: clean
-	rm -f $(LIBFT)
-	rm -f $(NAME)
-	rm -f $(BONUS_NAME)
+	@rm -f $(LIBFT) $(NAME) $(BONUS_NAME) 2> /dev/stderr > /dev/null
+	@rm -rf $(LIBFT_DIR) 2> /dev/stderr > /dev/null
+	@echo "Fully cleaned up all generated files."
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:28:14 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/08/15 12:16:58 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:06:17 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ static void	ft_reverse_rotate(t_stack **sta)
 void	ft_rra(t_stack **sta)
 {
 	ft_reverse_rotate(sta);
-	ft_putstr("rra\n");
+	ft_putstr_fd("rra\n", 1);
 }
 
 void	ft_rrb(t_stack **stb)
 {
 	ft_reverse_rotate(stb);
-	ft_putstr("rrb\n");
+	ft_putstr_fd("rrb\n", 1);
 }
 
 void	ft_rrr(t_stack **sta, t_stack **stb)
 {
 	ft_reverse_rotate(sta);
 	ft_reverse_rotate(stb);
-	ft_putstr("rrr\n");
+	ft_putstr_fd("rrr\n", 1);
 }

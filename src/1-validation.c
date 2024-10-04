@@ -6,7 +6,7 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:00:31 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/08/19 11:29:53 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:03:03 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_duplicate(char **av)
 		j = i + 1;
 		while (av[j])
 		{
-			if (ft_atoi(av[i]) == ft_atoi(av[j]))
+			if (ft_atoipw(av[i]) == ft_atoipw(av[j]))
 				return (1);
 			j++;
 		}
@@ -75,7 +75,7 @@ void	ft_freee(t_stack **sta)
 	*sta = NULL;
 }
 
-void	ft_error(t_stack **sta, t_stack **stb)
+void	ft_errorr(t_stack **sta, t_stack **stb)
 {
 	if (sta && *sta)
 		ft_freee(sta);

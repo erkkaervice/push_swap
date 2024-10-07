@@ -6,14 +6,14 @@
 #    By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/04 15:36:34 by eala-lah          #+#    #+#              #
-#    Updated: 2024/10/04 16:00:30 by eala-lah         ###   ########.fr        #
+#    Updated: 2024/10/07 11:45:04 by eala-lah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME        = push_swap
 BONUS_NAME  = checker
 
-INCS        = -I ./inc/
+INCS        = -I ./libft/inc/ -I ./inc/
 LIBFT_DIR   = libft/
 LIBFT       = $(LIBFT_DIR)/libft.a
 
@@ -52,7 +52,7 @@ CC          = gcc
 CFLAGS      = -Wall -Wextra -Werror -fPIC
 GIT_FLAGS   = git clone --depth 1
 
-all: $(OBJ_DIR) $(LIBFT) $(NAME)
+all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -62,11 +62,11 @@ $(LIBFT):
 	@if [ ! -d "$(LIBFT_DIR)" ]; then \
 		$(GIT_FLAGS) https://github.com/erkkaervice/libft.git $(LIBFT_DIR) || exit 1; \
 	fi
-	@make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC" 2> /dev/stderr > /dev/null
+	@make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC -I ./inc/" 2> /dev/stderr > /dev/null
 	@echo "Libft library built."
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c inc/push_swap.h
-	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ 2> /dev/stderr > /dev/null
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 	@echo "Compiled $< into $@."
 
 $(NAME): $(OBJS)

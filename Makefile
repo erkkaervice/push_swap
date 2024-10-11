@@ -6,12 +6,12 @@
 #    By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/04 15:36:34 by eala-lah          #+#    #+#              #
-#    Updated: 2024/10/07 14:15:32 by eala-lah         ###   ########.fr        #
+#    Updated: 2024/10/11 14:05:02 by eala-lah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME        = push_swap
-BONUS_NAME  = checker
+NAME          = push_swap
+NAME_CHECKER  = checker
 
 INCS        = -I ./inc/ -I ./libft/inc/
 LIBFT_DIR   = libft/
@@ -31,7 +31,7 @@ SRC         = \
     rotate.c \
     swap.c
 
-BONUS_SRC   = \
+SRC_CHECKER = \
     checker_bonus.c \
     1-validation.c \
     2-stacking.c \
@@ -44,15 +44,15 @@ BONUS_SRC   = \
     rotate.c \
     reverse_rotate.c
 
-OBJ_DIR     = obj/
-OBJS        = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
-BONUS_OBJS  = $(addprefix $(OBJ_DIR), $(BONUS_SRC:.c=.o))
+OBJ_DIR       = obj/
+OBJS          = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+OBJS_CHECKER  = $(addprefix $(OBJ_DIR), $(SRC_CHECKER:.c=.o))
 
 CC          = gcc
-CFLAGS      = -Wall -Wextra -Werror -fPIC
+CFLAGS      = -Wall -Wextra -Werror $(INCS) -fPIC
 GIT_FLAGS   = git clone --depth 1
 
-all: $(LIBFT) $(OBJ_DIR) $(NAME)
+all: $(LIBFT) $(OBJ_DIR) $(NAME) $(NAME_CHECKER)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR) 2> /dev/null || { echo "Failed to create object directory." >&2; exit 1; }
@@ -63,23 +63,23 @@ $(LIBFT):
 	fi
 	@make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC -I ./inc/" > /dev/null 2>&1 || { echo "Failed to build libft library." >&2; exit 1; }
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ > /dev/null 2>&1 || { echo "Compilation failed for $<." >&2; exit 1; }
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c inc/push_swap.h
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ > /dev/null 2>&1 || { echo "Failed to compile $<."; exit 1; }
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft || { echo "Linking failed for $(NAME)." >&2; exit 1; }
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft || { echo "Failed to create executable $(NAME)."; exit 1; }
 
-bonus: $(OBJ_DIR) $(LIBFT) $(BONUS_NAME)
+$(NAME_CHECKER): $(OBJS_CHECKER)
+	@$(CC) $(CFLAGS) $(OBJS_CHECKER) -o $(NAME_CHECKER) -L $(LIBFT_DIR) -lft || { echo "Failed to create executable $(NAME_CHECKER)."; exit 1; }
 
-$(BONUS_NAME): $(BONUS_OBJS)
-	@$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME) -L $(LIBFT_DIR) -lft || { echo "Linking failed for $(BONUS_NAME)." >&2; exit 1; }
+bonus: all
 
 clean:
 	@rm -rf $(OBJ_DIR) 2> /dev/null || { echo "Failed to clean object files." >&2; }
 	@make -C $(LIBFT_DIR) clean > /dev/null 2>&1 || { echo "Failed to clean libft." >&2; }
 
 fclean: clean
-	@rm -f $(LIBFT) $(NAME) $(BONUS_NAME) 2> /dev/null || { echo "Failed to fully clean up." >&2; }
+	@rm -f $(LIBFT) $(NAME) $(NAME_CHECKER) 2> /dev/null || { echo "Failed to remove generated files."; }
 	@rm -rf $(LIBFT_DIR) 2> /dev/null || { echo "Failed to remove libft directory." >&2; }
 
 re: fclean all

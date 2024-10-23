@@ -6,7 +6,7 @@
 #    By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/04 15:36:34 by eala-lah          #+#    #+#              #
-#    Updated: 2024/10/11 14:05:02 by eala-lah         ###   ########.fr        #
+#    Updated: 2024/10/23 13:27:51 by eala-lah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,13 +64,13 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR) CFLAGS="-Wall -Wextra -Werror -fPIC -I ./inc/" > /dev/null 2>&1 || { echo "Failed to build libft library." >&2; exit 1; }
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c inc/push_swap.h
-	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ > /dev/null 2>&1 || { echo "Failed to compile $<."; exit 1; }
+	@$(CC) $(CFLAGS) $(INCS) -c $< -o $@ 2> /dev/stderr || { echo "Failed to compile $<." >&2; exit 1; }
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft || { echo "Failed to create executable $(NAME)."; exit 1; }
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft 2> /dev/stderr || { echo "Failed to create executable $(NAME)." >&2; exit 1; }
 
 $(NAME_CHECKER): $(OBJS_CHECKER)
-	@$(CC) $(CFLAGS) $(OBJS_CHECKER) -o $(NAME_CHECKER) -L $(LIBFT_DIR) -lft || { echo "Failed to create executable $(NAME_CHECKER)."; exit 1; }
+	@$(CC) $(CFLAGS) $(OBJS_CHECKER) -o $(NAME_CHECKER) -L $(LIBFT_DIR) -lft 2> /dev/stderr || { echo "Failed to create executable $(NAME_CHECKER)." >&2; exit 1; }
 
 bonus: all
 
@@ -79,8 +79,8 @@ clean:
 	@make -C $(LIBFT_DIR) clean > /dev/null 2>&1 || { echo "Failed to clean libft." >&2; }
 
 fclean: clean
-	@rm -f $(LIBFT) $(NAME) $(NAME_CHECKER) 2> /dev/null || { echo "Failed to remove generated files."; }
-	@rm -rf $(LIBFT_DIR) 2> /dev/null || { echo "Failed to remove libft directory." >&2; }
+	@rm -f $(LIBFT) $(NAME) $(NAME_CHECKER) 2> /dev/stderr || { echo "Failed to remove generated files." >&2; }
+	@rm -rf $(LIBFT_DIR) 2> /dev/stderr || { echo "Failed to remove libft directory." >&2; exit 1; }
 
 re: fclean all
 

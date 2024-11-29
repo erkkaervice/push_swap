@@ -6,7 +6,7 @@
 #    By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/04 15:36:34 by eala-lah          #+#    #+#              #
-#    Updated: 2024/10/23 14:26:30 by eala-lah         ###   ########.fr        #
+#    Updated: 2024/11/29 14:58:47 by eala-lah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,12 +76,12 @@ $(NAME_CHECKER): $(OBJS_CHECKER)
 bonus: all
 
 clean:
-	@rm -rf $(OBJ_DIR) 2> /dev/null || { echo "Failed to clean object files." >&2; }
-	@make -C $(LIBFT_DIR) clean > /dev/null 2>&1 || { echo "Failed to clean libft." >&2; }
+	@rm -rf $(OBJ_DIR) 2> /dev/null || { echo "Failed to clean object files." >&2; exit 1; }
+	@make -C $(LIBFT_DIR) clean > /dev/null 2>&1 || { if [ -d "$(LIBFT_DIR)" ]; then echo "Failed to clean libft." >&2; exit 1; fi; }
 
 fclean: clean
-	@rm -f $(LIBFT) $(NAME) $(NAME_CHECKER) 2> /dev/stderr || { echo "Failed to remove generated files." >&2; }
-	@rm -rf $(LIBFT_DIR) 2> /dev/stderr || { echo "Failed to remove libft directory." >&2; exit 1; }
+	@rm -f $(LIBFT) $(NAME) $(NAME_CHECKER) 2> /dev/stderr || { echo "Failed to remove generated files." >&2; exit 1; }
+	@rm -rf $(LIBFT_DIR) 2> /dev/stderr || { if [ -d "$(LIBFT_DIR)" ]; then echo "Failed to remove libft directory." >&2; exit 1; fi; }
 
 re: fclean all
 

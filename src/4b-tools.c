@@ -6,12 +6,24 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:33:08 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/08/15 12:44:33 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:04:51 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/*
+ * ft_stalen - Calculates the length of the stack.
+ *
+ * This function traverses the stack and counts the number of nodes to 
+ * determine its length.
+ *
+ * Parameters:
+ * - sta: The stack to calculate the length of.
+ *
+ * Returns:
+ * - The length of the stack.
+ */
 int	ft_stalen(t_stack *sta)
 {
 	int	i;
@@ -25,6 +37,18 @@ int	ft_stalen(t_stack *sta)
 	return (i);
 }
 
+/*
+ * ft_dartagnan - Divides the stack into two halves and pushes the lower 
+ * half to another stack.
+ *
+ * This function performs a sorting optimization by splitting the stack 
+ * based on indices and pushing elements to the auxiliary stack while rotating 
+ * the original stack.
+ *
+ * Parameters:
+ * - sta: The stack to divide.
+ * - stb: The auxiliary stack to push elements to.
+ */
 void	ft_dartagnan(t_stack **sta, t_stack **stb)
 {
 	int	sts;
@@ -49,6 +73,17 @@ void	ft_dartagnan(t_stack **sta, t_stack **stb)
 		ft_pb(sta, stb);
 }
 
+/*
+ * ft_clicker - Calculates the number of rotations required for elements 
+ * in both stacks.
+ *
+ * This function calculates the necessary rotations for elements in both the 
+ * main and auxiliary stacks, based on their position and target.
+ *
+ * Parameters:
+ * - sta: The main stack.
+ * - stb: The auxiliary stack.
+ */
 void	ft_clicker(t_stack **sta, t_stack **stb)
 {
 	t_stack	*tmp;
@@ -68,6 +103,18 @@ void	ft_clicker(t_stack **sta, t_stack **stb)
 	}
 }
 
+/*
+ * ft_fastrotate - Calculates the optimal number of rotations for both 
+ * stacks and performs the moves.
+ *
+ * This function checks the absolute rotations needed for each element in 
+ * the stacks and performs the most optimal rotations to minimize the 
+ * total rotation count.
+ *
+ * Parameters:
+ * - sta: The main stack.
+ * - stb: The auxiliary stack.
+ */
 void	ft_fastrotate(t_stack **sta, t_stack **stb)
 {
 	t_stack	*tmp;
@@ -92,6 +139,16 @@ void	ft_fastrotate(t_stack **sta, t_stack **stb)
 	ft_move(sta, stb, roa, rob);
 }
 
+/*
+ * ft_rearrange - Rearranges the stack to place the smallest element at 
+ * the top.
+ *
+ * This function ensures that the smallest element in the stack is placed 
+ * at the top by performing the necessary rotations.
+ *
+ * Parameters:
+ * - sta: The stack to rearrange.
+ */
 void	ft_rearrange(t_stack **sta)
 {
 	int	low;

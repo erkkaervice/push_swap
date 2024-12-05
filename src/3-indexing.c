@@ -6,12 +6,21 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:00:45 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/08/09 14:02:57 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:36:44 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/*
+ * ft_pindex - Assigns a position index to each element in the stack.
+ *
+ * This function traverses the stack and assigns a position to each element,
+ * starting from 0 and incrementing by 1 for each node.
+ *
+ * Parameters:
+ * - sta: A pointer to the stack to assign position indexes.
+ */
 static void	ft_pindex(t_stack **sta)
 {
 	t_stack	*tmp;
@@ -26,6 +35,22 @@ static void	ft_pindex(t_stack **sta)
 	}
 }
 
+/*
+ * ft_findex - Finds the position of the target element based on the index.
+ *
+ * This function looks for the element in the stack with the closest index that
+ * is larger than the current element's index but smaller than the target index.
+ * If no such element exists, it finds the element with the smallest index.
+ *
+ * Parameters:
+ * - sta: A pointer to the stack to search.
+ * - bdx: The base index of the current element.
+ * - tdx: The target index to compare against.
+ * - tpo: The target position of the element.
+ *
+ * Returns:
+ * - The position of the target element.
+ */
 static int	ft_findex(t_stack **sta, int bdx, int tdx, int tpo)
 {
 	t_stack	*tmp;
@@ -55,6 +80,17 @@ static int	ft_findex(t_stack **sta, int bdx, int tdx, int tpo)
 	return (tpo);
 }
 
+/*
+ * ft_tindex - Assigns target positions to elements in stack B based on
+ * stack A's indices.
+ *
+ * This function uses the index values in stack A to determine where the 
+ * elements in stack B should target for future operations.
+ *
+ * Parameters:
+ * - sta: A pointer to stack A.
+ * - stb: A pointer to stack B.
+ */
 void	ft_tindex(t_stack **sta, t_stack **stb)
 {
 	t_stack	*tmp;
@@ -69,6 +105,18 @@ void	ft_tindex(t_stack **sta, t_stack **stb)
 	}
 }
 
+/*
+ * ft_lindex - Finds the position of the element with the lowest index in stack.
+ *
+ * This function searches through the stack and finds the position of the 
+ * element with the smallest index value.
+ *
+ * Parameters:
+ * - sta: A pointer to the stack to search.
+ *
+ * Returns:
+ * - The position of the element with the lowest index.
+ */
 int	ft_lindex(t_stack **sta)
 {
 	t_stack	*tmp;
@@ -93,6 +141,16 @@ int	ft_lindex(t_stack **sta)
 	return (lpo);
 }
 
+/*
+ * ft_index - Assigns an index value to each element in the stack.
+ *
+ * This function iterates over the stack and assigns descending index values 
+ * to each element based on the highest value.
+ *
+ * Parameters:
+ * - sta: A pointer to the stack to assign index values.
+ * - sts: The number of elements in the stack.
+ */
 void	ft_index(t_stack *sta, int sts)
 {
 	t_stack	*tmp;

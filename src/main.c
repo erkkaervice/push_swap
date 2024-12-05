@@ -6,12 +6,25 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:41:12 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/10/04 15:02:14 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:04:37 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/*
+ * main - Entry point for the program.
+ *
+ * This function processes the input, validates it, checks if the stack 
+ * is already sorted, and performs the push_swap algorithm if necessary.
+ *
+ * Parameters:
+ * - ac: The number of arguments.
+ * - av: The array of arguments.
+ *
+ * Returns:
+ * - 0 if no errors occur and the program exits successfully.
+ */
 int	main(int ac, char **av)
 {
 	t_stack	*sta;

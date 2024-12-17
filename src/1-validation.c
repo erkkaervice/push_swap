@@ -6,7 +6,7 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:00:31 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/12/05 14:34:58 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:00:10 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_duplicate(char **av)
 		j = i + 1;
 		while (av[j])
 		{
-			if (ft_atoipw(av[i]) == ft_atoipw(av[j]))
+			if (ft_atol(av[i]) == ft_atol(av[j]))
 				return (1);
 			j++;
 		}

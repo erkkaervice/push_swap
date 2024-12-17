@@ -6,7 +6,7 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:34:27 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/12/05 15:04:01 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:00:10 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_stack
 int			ft_valid(char **av);
 void		ft_freee(t_stack **sta);
 void		ft_errorr(t_stack **sta, t_stack **stb);
-long		ft_atoipw(char const *str);
+long		ft_atol(char const *str);
 t_stack		*ft_newstack(int value);
 void		ft_addbotstack(t_stack **sta, t_stack *new);
 t_stack		*ft_value(int ac, char **av);

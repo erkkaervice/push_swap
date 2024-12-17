@@ -6,53 +6,11 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:18:45 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/12/05 14:35:08 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:02:26 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*
- * ft_atoipw - Converts a string to a long integer, considering potential
- * sign and overflow.
- *
- * This function mimics the behavior of the `atoi` function, but it performs
- * the conversion to a `long` type, which is capable of handling larger values
- * than a standard `int`. It also properly handles the sign and ensures that
- * integer overflows are avoided.
- *
- * Parameters:
- * - str: The string to be converted to a long integer.
- *
- * Returns:
- * - The converted long integer, ensuring proper sign and overflow handling.
- */
-long	ft_atoipw(char const *str)
-{
-	long long int	n;
-	int				sign;
-
-	n = 0;
-	sign = 1;
-	while (*str && ft_isspace(*str))
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while (*str && ft_isdigit(*str))
-	{
-		n = n * 10 + (*str - '0');
-		str++;
-		if (n > INT_MAX && sign == 1)
-			return (n);
-		if (n > (long long)INT_MAX + 1 && sign == -1)
-			return (n * sign);
-	}
-	return ((n * sign));
-}
 
 /*
  * ft_newstack - Creates a new stack node with a given value.
@@ -139,7 +97,7 @@ t_stack	*ft_value(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		n = ft_atoipw(av[i]);
+		n = ft_atol(av[i]);
 		if (n > INT_MAX || n < INT_MIN)
 			ft_errorr(&sta, NULL);
 		ft_addbotstack(&sta, ft_newstack((int)n));

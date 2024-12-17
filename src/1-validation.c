@@ -6,37 +6,11 @@
 /*   By: eala-lah <eala-lah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 13:00:31 by eala-lah          #+#    #+#             */
-/*   Updated: 2024/12/17 15:00:10 by eala-lah         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:24:12 by eala-lah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*
- * ft_number - Validates if a string represents a valid number.
- *
- * This function checks if a string represents a valid integer, allowing for
- * an optional sign at the beginning. It returns 1 if the string is a valid
- * number, and 0 otherwise. The function ensures that the entire string
- * consists of digits (with possible leading whitespace and a single sign).
- *
- * Parameters:
- * - av: The string to check if it represents a valid number.
- *
- * Returns:
- * - 1 if the string is a valid number, 0 otherwise.
- */
-static int	ft_number(char *av)
-{
-	int	i;
-
-	i = 0;
-	if (ft_issign(av[i]) && av[i + 1])
-		i++;
-	while (av[i] && ft_isdigit(av[i]))
-		i++;
-	return (av[i] == '\0');
-}
 
 /*
  * ft_duplicate - Checks for duplicate values in an array.
@@ -94,7 +68,7 @@ int	ft_valid(char **av)
 	{
 		if (!av[i][0])
 			return (0);
-		if (!ft_number(av[i]))
+		if (!ft_isnum(av[i]))
 			return (0);
 		i++;
 	}
